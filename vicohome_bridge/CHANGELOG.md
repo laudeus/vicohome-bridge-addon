@@ -1,5 +1,10 @@
 # Vicohome Bridge Add-on Changelog
 
+## 2.0.2
+
+- Fixed the image build: the Dockerfile now defaults BUILD_ARCH to amd64 and derives the runtime base image from it, so the build no longer depends on the Supervisor supplying the base image.
+- Bumped the version to 2.0.2 so the add-on store re-reads the config.
+
 ## 2.0.1
 
 - Added amd64 support alongside aarch64, so the add-on now runs on x86-64 (amd64) systems as well as ARM64. Fork of upstream 2.0.0.
