@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG BUILD_FROM
+ARG BUILD_ARCH=amd64
 
 # Builder stage: compile vico-cli for Linux
 FROM golang:1.23-alpine AS builder
@@ -17,16 +17,15 @@ COPY vico-cli-main/ ./
 RUN CGO_ENABLED=0 GOOS=linux go build -o /out/vico-cli main.go
 
 # ----------------------------------------------------------------------
-# Runtime image: base image supplied by the Supervisor (BUILD_FROM) for the build architecture
+# Runtime image: base image follows the build architecture (BUILD_ARCH, default amd64)
 # ----------------------------------------------------------------------
-FROM $BUILD_FROM
+FROM ghcr.io/home-assistant/${BUILD_ARCH}-base:3.19
 
 # Install MQTT client and jq for JSON handling
 RUN apk add --no-cache mosquitto-clients jq
 
 # Run as root for simplicity
 USER root
-
 WORKDIR /app
 
 # Copy compiled binary from builder
@@ -35,5 +34,4 @@ COPY --from=builder /out/vico-cli /usr/local/bin/vico-cli
 # Copy run script
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
-
 CMD ["/run.sh"]
