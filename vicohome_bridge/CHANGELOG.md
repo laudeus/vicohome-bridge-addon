@@ -1,5 +1,10 @@
 # Vicohome Bridge Add-on Changelog
 
+## 2.0.1
+
+- Added amd64 support alongside aarch64, so the add-on now runs on x86-64 (amd64) systems as well as ARM64. Fork of upstream 2.0.0.
+- Made the runtime Docker image follow the build architecture, using the amd64 or aarch64 Home Assistant base image as appropriate.
+
 ## 2.0.0
 - Added region-aware API routing so the add-on and bundled `vico-cli` can call the Vicohome EU or US endpoints (or auto-select the default) without manual code edits.
 - Exposed `region` and `api_base_override` configuration options and plumbed them through the runtime environment so every CLI command, telemetry poll, and motion pull honors the selected geography.
@@ -36,7 +41,7 @@ ing only runs once per install unless you disable/delete the data files.
 
 ## 1.1.4
 - Fixed a bash runtime error when telemetry payloads arrived without an explicit `online` field by ensuring the fallback logic
-  always initializes the variable before use.
+always initializes the variable before use.
 
 ## 1.1.3
 - Added explicit changelog metadata so Home Assistant shows release notes in the add-on store.
