@@ -15,10 +15,11 @@ COPY vico-cli-main/ ./
 # Build the vico-cli binary
 RUN CGO_ENABLED=0 GOOS=linux go build -o /out/vico-cli main.go
 
-# -------------------------------------------------------------------
-# Runtime image: Home Assistant base image for aarch64 (ARM64)
-# -------------------------------------------------------------------
-FROM ghcr.io/home-assistant/aarch64-base:3.19
+# ----------------------------------------------------------------------
+# Runtime image: Home Assistant base image (follows the build architecture)
+# ----------------------------------------------------------------------
+ARG BUILD_ARCH
+FROM ghcr.io/home-assistant/${BUILD_ARCH}-base:3.19
 
 # Install MQTT client and jq for JSON handling
 RUN apk add --no-cache mosquitto-clients jq
