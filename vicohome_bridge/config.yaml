@@ -14,7 +14,7 @@ init: false
 startup: services
 boot: auto
 services:
-  - mqtt: need
+  - "mqtt:need"
 options:
   email: ""
   password: ""
